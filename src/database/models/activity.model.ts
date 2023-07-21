@@ -19,7 +19,6 @@ const CommentActionSchema = new Schema({
 
 const ActivitySchema: Schema = new Schema(
   {
-    _id: { type: Schema.Types.ObjectId },
     post_id: {
       type: Schema.Types.ObjectId,
       required: true,

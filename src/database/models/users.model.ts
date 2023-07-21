@@ -3,9 +3,6 @@ import { ACCOUNT_TYPE, IUser } from "../../constants/interfaces/models.interface
 
 const UserSchema: Schema = new Schema(
   {
-    _id: {
-        type: Schema.Types.ObjectId
-    },
     username: {
       type: String,
       required: true,
@@ -19,8 +16,12 @@ const UserSchema: Schema = new Schema(
       required: true,
       unique: true,
     },
+    gender: {
+      type: String,
+      required: true,
+    },
     phone: {
-      type: Number,
+      type: Schema.Types.String,
       required: true,
       unique: true,
     },

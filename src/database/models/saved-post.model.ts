@@ -5,9 +5,6 @@ import User from "./users.model";
 
 const SavedPostSchema: Schema = new Schema(
   {
-    _id: {
-      type: Schema.Types.ObjectId,
-    },
     user_id: {
       type: Schema.Types.ObjectId,
       ref: User,

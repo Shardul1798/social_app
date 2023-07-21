@@ -34,6 +34,6 @@ const FollowerManagementSchema: Schema = new Schema(
   }
 );
 
-const FollowerManagement = mongoose.model<IFollowerManagement>("FollowerManagement", FollowerManagementSchema);
+const followerManagement = mongoose.model<IFollowerManagement>("FollowerManagement", FollowerManagementSchema);
 
-export default FollowerManagement;
+export default followerManagement;
