@@ -1,12 +1,15 @@
-import { MESSAGES } from "../constants/messages";
-import { STATUS } from "../constants/status";
+import { MESSAGES } from "../common/messages";
+import { STATUS } from "../common/status";
 import userEntity from "../entity/user.entity";
 import bcrypt from "bcrypt";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import User from "../database/models/users.model";
 import followerManagement from "../database/models/follower-management.model";
 import Session from "../database/models/session.model";
-import { ACCOUNT_TYPE, FOLLOWER_STATUS } from "../constants/interfaces/models.interface";
+import {
+  ACCOUNT_TYPE,
+  FOLLOWER_STATUS,
+} from "../common/interfaces/models.interface";
 
 class UserService {
   async LoginUser(payload) {
@@ -35,10 +38,9 @@ class UserService {
       const createPayload = {
         user_id: checkUser._id,
         expiryTime: Date.now() + 60 * 60 * 24,
-        deviceType: 'POSTMAN',
+        deviceType: "POSTMAN",
         deviceId: "1234",
-        deviceIP: "192.0.0.1"
-
+        deviceIP: "192.0.0.1",
       };
       const sessionCreate: any = await userEntity.createDocument(
         createPayload,
@@ -92,7 +94,7 @@ class UserService {
       const findUser = await userEntity.findExistingUser({
         username: payload.username,
         email: payload.email,
-        phone: payload.phone
+        phone: payload.phone,
       });
       if (findUser && findUser.length) {
         responseObj.statusCode = STATUS.SUCCESS;
@@ -132,9 +134,10 @@ class UserService {
         responseObj.message = MESSAGES.NOT_FOUND.USER_NOT_FOUND;
         return responseObj;
       }
+      const followerDetails = await userEntity.followersDetails(id);
       responseObj.statusCode = STATUS.SUCCESS;
       responseObj.message = MESSAGES.SUCCESS.DETAILS_SUCCESS;
-      responseObj.data = response;
+      responseObj.data = [{response, followers: followerDetails }];
       return responseObj;
     } catch (error) {
       console.error(error);
@@ -146,7 +149,7 @@ class UserService {
 
   async checkUserProfileStatus(id, receiversId) {
     let responseObj: any = {};
-    try{
+    try {
       const payload = { _id: id };
       const response = await userEntity.findSingleUser(payload, User);
       if (!response) {
@@ -154,10 +157,21 @@ class UserService {
         responseObj.message = MESSAGES.NOT_FOUND.USER_NOT_FOUND;
         return responseObj;
       }
-      if(response && response.account_privacy && response.account_privacy == ACCOUNT_TYPE.PRIVATE) {
-        const followerPayload = { sendorId: id, receiversId: receiversId, status: FOLLOWER_STATUS.ACCEPTED };
-        const responseFollower = await userEntity.findSingleUser(followerPayload, followerManagement);
-        if(!responseFollower) {
+      if (
+        response &&
+        response.account_privacy &&
+        response.account_privacy == ACCOUNT_TYPE.PRIVATE
+      ) {
+        const followerPayload = {
+          sendorId: id,
+          receiversId: receiversId,
+          status: FOLLOWER_STATUS.ACCEPTED,
+        };
+        const responseFollower = await userEntity.findSingleUser(
+          followerPayload,
+          followerManagement
+        );
+        if (!responseFollower) {
           responseObj.statusCode = STATUS.UNAUTHORIZED;
           responseObj.message = MESSAGES.ERROR.PRIVATE_USER;
           responseObj.data = null;

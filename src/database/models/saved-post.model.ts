@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ISavedPost } from "../../constants/interfaces/models.interface";
+import { ISavedPost } from "../../common/interfaces/models.interface";
 import Post from "./posts.model";
 import User from "./users.model";
 

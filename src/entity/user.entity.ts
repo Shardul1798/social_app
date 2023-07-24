@@ -1,4 +1,5 @@
-import { Schema } from "mongoose";
+import * as mongoose from "mongoose";
+import followerManagement from "../database/models/follower-management.model";
 import User from "../database/models/users.model";
 
 class UserEntity {
@@ -12,16 +13,40 @@ class UserEntity {
     });
   }
 
-  async findByMultipleIds(ids: Array<Schema.Types.ObjectId>) {
-    // User.find({ _id: {$in: ids}});
-  }
-
   async findSingleUser(payload: any, entityType) {
     return await entityType.findOne(payload);
   }
 
   async createDocument(body, entityType) {
     return await entityType.create(body);
+  }
+
+  async followersDetails(id) {
+    const details = await followerManagement.aggregate([
+      {
+        $match: {
+          recieversId: { $eq: new mongoose.Types.ObjectId(id) },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "sendersId",
+          foreignField: "_id",
+          as: "FollowerData",
+        },
+      },
+      {
+        $unwind: "$FollowerData",
+      },
+      {
+        $project: {
+          sendersId: 1,
+          FollowerData: { username: 1 },
+        },
+      },
+    ]);
+    return details;
   }
 
   async IncrementCount(userId, type) {

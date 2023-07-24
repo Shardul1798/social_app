@@ -1,12 +1,12 @@
-import { MESSAGES } from "../constants/messages";
-import { STATUS } from "../constants/status";
+import { MESSAGES } from "../common/messages";
+import { STATUS } from "../common/status";
 import userEntity from "../entity/user.entity";
 import User from "../database/models/users.model";
 import followerManagement from "../database/models/follower-management.model";
 import {
   ACCOUNT_TYPE,
   FOLLOWER_STATUS,
-} from "../constants/interfaces/models.interface";
+} from "../common/interfaces/models.interface";
 import postEntity from "../entity/post.entity";
 
 class PostService {

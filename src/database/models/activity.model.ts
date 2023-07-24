@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import {
   ACTIVITY_TYPE,
   IActivity,
-} from "../../constants/interfaces/models.interface";
+} from "../../common/interfaces/models.interface";
 import Post from "./posts.model";
 import User from "./users.model";
 

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { ACCOUNT_TYPE, IUser } from "../../constants/interfaces/models.interface";
+import { ACCOUNT_TYPE, IUser } from "../../common/interfaces/models.interface";
 
 const UserSchema: Schema = new Schema(
   {

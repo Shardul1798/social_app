@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { STATUS } from "../constants/status";
+import { STATUS } from "../common/status";
 import userService from "../services/user.service";
 
 class UserController {

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ISession } from "../../constants/interfaces/models.interface";
+import { ISession } from "../../common/interfaces/models.interface";
 import User from "./users.model";
 
 const SessionSchema: Schema = new Schema(

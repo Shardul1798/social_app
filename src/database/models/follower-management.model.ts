@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { FOLLOWER_STATUS, IFollowerManagement } from "../../constants/interfaces/models.interface";
+import { FOLLOWER_STATUS, IFollowerManagement } from "../../common/interfaces/models.interface";
 import User from "./users.model";
 
 const FollowerManagementSchema: Schema = new Schema(

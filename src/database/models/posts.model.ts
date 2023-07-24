@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { IPosts } from "../../constants/interfaces/models.interface";
+import { IPosts } from "../../common/interfaces/models.interface";
 import User from "./users.model";
 
 const PostSchema: Schema = new Schema(

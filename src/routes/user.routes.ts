@@ -5,7 +5,7 @@ import {
   REGISTER,
   VIEW_POST_DETAILS,
   VIEW_PROFILE,
-} from "../constants/routes";
+} from "../common/routes";
 import userController from "../controller/user.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import validateBody from "../middlewares/validate-body.middleware";
@@ -29,9 +29,11 @@ class UserRoutes {
       validateBody.Register,
       userController.registerUser
     );
-    this.route.get('/view-profile/:id',authMiddleware.validateAuthToken ,userController.viewUserProfile);
-    this.route.post(CREATE_POST, userController.createPost);
-    this.route.post(VIEW_POST_DETAILS, userController.viewPostDetails);
+    this.route.get(
+      "/view-profile/:id",
+      authMiddleware.validateAuthToken,
+      userController.viewUserProfile
+    );
     return this.route;
   }
 }

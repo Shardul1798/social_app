@@ -76,7 +76,6 @@ class AuthMiddleware {
         return;
       }
       let authorizeToken = await this.decodeToken(token);
-      console.log(authorizeToken, authorizeToken.sessionId, authorizeToken.id);
       req.body.currentUserId = authorizeToken.id;
       if (!authorizeToken) {
         res
