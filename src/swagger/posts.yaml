@@ -1,0 +1,80 @@
+tags:
+  - name: POST
+    description: (Posts related to user)
+paths:
+  /social-app/post/create:
+    post:
+      tags:
+        - POST
+      summary: Allows user to create post
+      description: Allows user to create post,on which other user can like or comment
+      security:
+        - BearerAuth: []
+      requestBody:
+        description: Add post details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string,
+                  example: 64b93d4726996f89295f29c1
+                  description: Owner of the post
+                caption:
+                  type: string
+                  example: My first post
+                  description: caption to the post
+                media:
+                  type: array
+                  items:
+                    type: string
+                  exapmle:
+                    [
+                      "https://media.istockphoto.com/id/1146517111/photo/taj-mahal-mausoleum-in-agra.jpg",
+                    ]
+                  description: Array of uploaded media URL's
+                tagged:
+                  type: array
+                  items:
+                    type: string
+                  example: ["e14ajdeui1i1eiedkmie923je93djjeoeo"]
+                  description: Array of ObjectId(userIds)
+                type:
+                  type: string
+                  enum:
+                    - POST
+                    - STORY
+                    - REEL
+                  description: enum(POST, STORY, REEL)
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "400":
+          description: Validation exception
+components:
+  schemas:
+    create-post-entity:
+      type: object
+      properties:
+        caption:
+          type: string
+          example: My first post
+          description: caption to the post
+        # media:
+        #   type: string,
+        #   exapmle: ['https://media.istockphoto.com/id/1146517111/photo/taj-mahal-mausoleum-in-agra.jpg?s=612x612&w=0&k=20&c=vcIjhwUrNyjoKbGbAQ5sOcEzDUgOfCsm9ySmJ8gNeRk=']
+        #   description: Array of uploaded media URLs
+        # tagged:
+        #   type: string
+        #   example: ['e14ajdeui1i1eiedkmie923je93djjeoeo']
+        #   description: Array of ObjectId(userIds)
+        # type:
+        #   type: string
+        #   example: POST
+        #   description: enum(POST, STORY, REEL)
